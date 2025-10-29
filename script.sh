@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "hi polyclud"
+echo "hi polycloud"
