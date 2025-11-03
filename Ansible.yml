@@ -1,1 +1,8 @@
+---
+- name: Print a simple "Hello" message
+  hosts: all  # Target all hosts listed in your inventory
+  tasks:
+    - name: Use the debug module to display "Hello, Ansible!"
+      ansible.builtin.debug:
+        msg: "Hello, Ansible! This is a basic playbook execution."
 
