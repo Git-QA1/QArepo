@@ -1,0 +1,22 @@
+---
+- name: Execute hello_polycloud.sh on intar_server_hosts and then delete it
+  hosts: hostName
+  gather_facts: false # Set to true if you need facts from the hosts
+tasks:
+    - name: Ensure the hello_polycloud.sh script is present on the remote host
+      ansible.builtin.copy:
+        src: ./hello_polycloud.sh # This assumes hello_polycloud.sh is in the same folder as this playbook
+        dest: /tmp/hello_polycloud.sh # Or any suitable temporary directory on the remote host
+        mode: '0755' # Make it executable on the remote host
+      # Store the path to the copied file for later deletion
+      register: script_copy_info
+- name: Execute the hello_polycloud.sh script
+      ansible.builtin.command: "{{ script_copy_info.dest }}" # Use the actual destination path from copy module
+      register: script_output
+- name: Display script output
+      ansible.builtin.debug:
+        var: script_output.stdout
+- name: Delete the hello_polycloud.sh script from the remote host
+      ansible.builtin.file:
+        path: "{{ script_copy_info.dest }}" # Delete the file at the path where it was copied
+        state: absent # This ensures the file is removed
